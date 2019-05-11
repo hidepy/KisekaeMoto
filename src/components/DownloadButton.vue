@@ -31,8 +31,6 @@ export default {
         //const baseImg = document.getElementById("moto-image-gn125-front")
         const baseImg = document.querySelector(this.selectorBaseImg)
 
-        console.log(this)
-
         const { width: w, naturalWidth: nw, naturalHeight: nh } = baseImg
 
         // 復元のための比率を算出

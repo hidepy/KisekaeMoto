@@ -3,7 +3,7 @@
       <div id="main-images-panel">
 
           <div id="moto-images" class="moto-images">
-              <img id="moto-image-gn125-front" src="img/gn125/base/motobase-gn125-front-1.jpg">                    
+              <img id="moto-image-gn125-front" v-bind:src="mainImgPath" />
 
               <img
                   class="moto-parts"
@@ -68,6 +68,7 @@ import $ from "jquery"
 import { LOCAL_STORAGE_KEY_GN125 } from "../constants/constants.js"
 import motoPartsDefinitions from "../constants/motoPartsDefinitions.js"
 import DownloadButton from './DownloadButton.vue'
+import { setTimeout } from 'timers';
 
 export default {
     name: 'KisekaeMotoMain',
@@ -82,45 +83,24 @@ export default {
     data: function () {
       return {
         selectedMotoName: "GN125",
-        partsImgList: motoPartsDefinitions["GN125"],
+        mainImgPath: "",
+        partsImgList: [],//motoPartsDefinitions["GN125"],
+        filePath: "",//"./img/gn125/parts/motobase-gn125-front-1/",
         controllPanelSettings: controllPanelSrc,
-        filePath: "./img/gn125/parts/motobase-gn125-front-1/",
         adjustRatio: 1
       }
     },
 
     mounted: function(){
 
-        // 部品情報のロード
-        this.partsImgList = motoPartsDefinitions[this.selectedMotoName]
+        // 画像情報の更新及び描画の管理
+        this.updateImgDef()
 
         // 画面リサイズ時に再描画を仕掛ける
         $(window).resize(()=> {
             //再描画
             this.refreshParts()
         })
-
-        // 画像が全てロードされた後でないと、refreshしてもバグるので対策
-        {
-            const imgs = $(".moto-parts, #moto-image-gn125-front")
-
-            let count = 0
-
-            imgs.on("load", ()=> {
-                count++
-
-                if(count >= imgs.length){
-
-                    setTimeout(()=> {
-                        // 部品描画
-                        this.refreshParts()
-
-                        // opacityを0から1に
-                        imgs.css({opacity: 1})
-                    }, 1000)
-                }
-            })
-        }
 
         // Foldableコンポーネントのセットアップ
         window.M.Collapsible.init(document.querySelectorAll(".collapsible"), {})
@@ -167,9 +147,54 @@ export default {
     methods: {
 
         /**
+         * Imgが全てロードされたことを保証するためのメソッド
+         */
+        updateImgDef: function(){
+
+console.log("[updateImgDef]")
+
+            // バイクごと定義を取得
+            const motoDef = motoPartsDefinitions[this.selectedMotoName]
+
+            // 部品情報のロード
+            this.partsImgList = motoDef.partsDef
+
+            // パスの更新
+            this.mainImgPath = motoDef.mainImgPath
+            this.filePath = motoDef.partsPath
+
+            setTimeout(()=> {
+
+console.log("[updateImgDef#setTimeout]")
+
+                // 画像が全てロードされた後でないと、refreshしてもバグるので対策
+                const imgs = $(".moto-parts, #moto-image-gn125-front")
+
+                let count = 0
+
+                imgs.on("load", ()=> {
+                    count++
+
+console.log("[updateImgDef#setTImeout] count:" + count)
+
+                    if(count >= imgs.length){
+console.log("[updateImgDef#setTimeout#setTimeout]")
+                        setTimeout(()=> {
+                            // 部品描画
+                            this.refreshParts()
+
+                            // opacityを0から1に
+                            imgs.css({opacity: 1})
+                        }, 1000)
+                    }
+                })
+            }, 1)
+        },
+
+        /**
          * パーツ画像の再描画
          */
-        refreshParts: function(event){
+        refreshParts: function(){
 
             const imgWidth = $("#moto-images").width()
 
@@ -237,48 +262,6 @@ export default {
             alert("現在の設定を保存しました")
         },
 
-        // /**
-        //  * 編集結果画像をDL
-        //  */
-        // downloadImg: function(event){
-
-        //     // オリジナルのbase画像
-        //     const baseImg = document.getElementById("moto-image-gn125-front")
-
-        //     const { width: w, naturalWidth: nw, naturalHeight: nh } = baseImg
-
-        //     // 復元のための比率を算出
-        //     const ar = nw / w
-
-        //     const cvs = 
-        //         $("<canvas>")
-        //             .attr("width", nw)
-        //             .attr("height", nh)
-
-        //     // canvas contextを取得
-        //     const ctx = cvs.get()[0].getContext("2d")
-
-
-        //     // 主画像をcanvasに移しておく
-        //     ctx.drawImage(baseImg, 0, 0, nw, nh)
-
-        //     // 各部品画像をcanvasに描画する
-        //     $(".moto-parts")
-        //         .each((i, v)=> {
-        //             const { offsetTop: v_top, offsetLeft: v_left, width: v_w, height: v_h } = v
-
-        //             // cssフィルタをcanvasのフィルタにコピー(CSSと同じ形式なので)
-        //             ctx.filter = v.style.filter
-
-        //             // 比率を調整してcanvasに部品を描く
-        //             ctx.drawImage(v, v_left * ar, v_top * ar, v_w * ar, v_h * ar)
-        //         })
-
-
-        //     $(event.target)
-        //         .attr("href", cvs.get()[0].toDataURL("image/jpeg"))
-
-        // }
     },
 }
 
