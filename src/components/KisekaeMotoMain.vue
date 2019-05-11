@@ -82,8 +82,6 @@ export default {
             this.refreshAllParts()
         })
 
-        $()
-
         // // Foldableコンポーネントのセットアップ
         // window.M.Collapsible.init(document.querySelectorAll(".collapsible"), {})
         
@@ -137,17 +135,37 @@ console.log("[updateImgDef#setTimeout]")
 
 console.log("[updateImgDef#setTImeout] count:" + count)
 
-                    if(count >= imgs.length){
-console.log("[updateImgDef#setTimeout#setTimeout]")
-                        setTimeout(()=> {
-                            // 部品描画
-                            this.refreshAllParts()
+                    // 部品全描画(コストは高いが、全件ロード待ちがちょと挙動怪しかったのでやむなし...)
+                    this.refreshAllParts()
 
-                            // opacityを0から1に
-                            imgs.css({opacity: 1})
-                        }, 1000)
-                    }
+
+                    // TODO: ↓これがほぼ正しいはずだが...稀に画像がフルカウントされない...仕方ないので、一旦settimeoutでopacityはいい感じのタイミングで1に設定して...
+
+//                     if(count >= imgs.length){
+// console.log("[updateImgDef#setTimeout#setTimeout]")
+//                         setTimeout(()=> {
+//                             // 部品描画
+//                             //this.refreshAllParts()
+
+//                             // opacityを0から1に
+//                             imgs.css({opacity: 1})
+//                         }, 1)
+//                     }
                 })
+
+                imgs.on("error", (error)=> {
+                    console.log("something wrong... on loading imgs...");
+                    console.log(error);
+
+                    alert("画像情報のロードに失敗しました...ページをリフレッシュして再度お試しください...")
+                })
+
+                
+                // TODO: 苦しいが...暫定...
+                setTimeout(()=> {
+                    imgs.css({opacity: 1})
+                }, 1000)
+
             }, 1)
         },
 
@@ -155,6 +173,8 @@ console.log("[updateImgDef#setTimeout#setTimeout]")
          * パーツ画像全件の再描画
          */
         refreshAllParts: function(){
+
+console.log("[refreshAllParts] driven!!");
 
             const imgWidth = $("#moto-images").width()
 
