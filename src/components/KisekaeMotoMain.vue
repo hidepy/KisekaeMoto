@@ -1,5 +1,5 @@
 <template>
-<div>
+<div id="kisekae-moto-main-wrapper">
     <div id="main-images-panel">
 
         <div id="moto-images" class="moto-images">
@@ -31,6 +31,7 @@
         v-bind:parts-img-list="partsImgList"
         v-bind:controll-panel-settings="controllPanelSettings"
         v-bind:update-parts="updateParts"
+        v-bind:refresh-all-parts="refreshAllParts"
         v-bind:selected-moto-name="selectedMotoName"
     />
 
@@ -81,8 +82,10 @@ export default {
             this.refreshAllParts()
         })
 
-        // Foldableコンポーネントのセットアップ
-        window.M.Collapsible.init(document.querySelectorAll(".collapsible"), {})
+        $()
+
+        // // Foldableコンポーネントのセットアップ
+        // window.M.Collapsible.init(document.querySelectorAll(".collapsible"), {})
         
 
     },
@@ -237,8 +240,12 @@ const unitMap = {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+#kisekae-moto-main-wrapper{
+    padding-top: 42px;
+}
+
 #main-images-panel{
-   position: relative;
+   position: fixed;
 }
 
 .moto-images{
@@ -258,4 +265,17 @@ const unitMap = {
    position: relative;
 }
 
+@media screen and (min-width:1024px) {
+
+#kisekae-moto-main-wrapper{
+    padding-top: 56px;
+}
+
+#main-images-panel{
+   position: relative;
+}
+
+
+
+}
 </style>

@@ -19,6 +19,7 @@ export default {
 
 <style scoped>
 nav{
+    position: fixed;
    height: 42px !important;
    line-height: 42px !important;
 }

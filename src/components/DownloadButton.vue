@@ -76,10 +76,11 @@ export default {
    bottom: 8px;
    right: 8px;
    opacity: 0.8;
+   z-index: 300;
 }
 
 @media screen and (min-width:1024px) {
-  
+
 #button-download{
    position: fixed;
    bottom: 8px;

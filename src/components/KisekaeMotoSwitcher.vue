@@ -17,6 +17,7 @@
 
 <script>
 import $ from "jquery"
+import { LOCAL_STORAGE_KEYS } from '../constants/constants';
 
 export default {
     name: 'KisekaeMotoSwitcher',
@@ -32,6 +33,9 @@ export default {
             const motoName = $(event.target).attr("motoname")
 
             this.motoSwitcherCallback(motoName)
+
+            // LocalStorageの選択中バイクの値を更新
+            window.localStorage[LOCAL_STORAGE_KEYS.SELECTED_MOTO_NAME] = motoName
         }
     }
 }
@@ -41,8 +45,30 @@ export default {
 
 #moto-switcher-wrapper{
     position: fixed;
+    top: 36px;
+    right: 4px;
+    z-index: 200;
+}
+
+.moto-switcher-li{
+    margin: 2px;
+}
+
+.moto-switcher-img {
+    width: 64px;
+    height:64px;
+    border-radius: 64px;
+    border: solid 4px #00897b;
+    background-position: center;
+    background-size: cover;
+    box-shadow: 4px 4px 12px 6px rgba(0, 0, 0, 0.25);
+
+}
+
+@media screen and (min-width:1024px) {
+
+#moto-switcher-wrapper{
     top: 72px;
-    left: 4px;
 }
 
 .moto-switcher-li{
@@ -52,11 +78,7 @@ export default {
 .moto-switcher-img {
     width: 128px;
     height:128px;
-    border-radius: 64px;
-    border: solid 4px #00897b;
-    background-position: center;
-    background-size: cover;
-    box-shadow: 4px 4px 12px 6px rgba(0, 0, 0, 0.25);
+}
 
 }
 
