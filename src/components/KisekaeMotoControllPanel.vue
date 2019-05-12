@@ -13,17 +13,30 @@
                         v-for="settings in controllPanelSettings"
                         v-bind:key="parts.fileName + '' + settings.key"
                     >
-                        <span>{{settings.name}}:</span>
+                        <span class="controll-panel-span">{{settings.name}}:</span>
 
                         <input
                             type="range"
                             class="controll-panel-input"
+                            min="0"
                             v-bind:id="'controll-panel-' + parts.fileName + '-' + settings.key"
                             v-bind:max="settings.max"
                             v-bind:partsname="parts.fileName"
                             v-bind:settingname="settings.key"
-                            
+                            v-on:input="onSettingValueChange"
                             v-on:change="onSettingValueChange"
+                        />
+
+                        <input
+                            type="number"
+                            step="1"
+                            class="controll-panel-input-text"
+                            min="0"
+                            v-bind:id="'controll-panel-' + parts.fileName + '-' + settings.key + '-text'"
+                            v-bind:max="settings.max"
+                            v-bind:partsname="parts.fileName"
+                            v-bind:settingname="settings.key"
+                            v-on:change="onSettingTextValueChange"
                         />
 
                     </label>
@@ -135,6 +148,8 @@ export default {
                     .forEach(key=> {
 
                         $("#" + key).val(params[key])
+
+                        $("#" + key + "-text").val(params[key])
                     })
         },
 
@@ -180,9 +195,42 @@ export default {
         },
 
         /**
-         * 設定値変更時のイベントハンドラ
+         * 設定値変更時のイベントハンドラ(input type=text)
+         */
+        onSettingTextValueChange: function(event){
+
+            //console.log(event)
+
+            const newVal = $(event.target).val()
+
+            const tgtId = event.target.id.replace("-text", "")
+
+            // 更新先の要素を取得
+            const tgtEl = document.getElementById(tgtId)
+
+            // input type=rangeに値をセット
+            $(tgtEl).val(newVal)
+
+            // onChangeのフローに載せる
+            this.onSettingValueChange({target: tgtEl})
+
+            // 部分を再描画
+            //this.updateParts()
+
+        },
+
+        /**
+         * 設定値変更時のイベントハンドラ(input type=range)
          */
         onSettingValueChange: function(event){
+
+            //console.log(event);
+
+            const newVal = $(event.target).val()
+
+            const tgtId = event.target.id + "-text"
+
+            $("#" + tgtId).val(newVal)
 
             this.updateParts(event)
 
@@ -223,6 +271,19 @@ export default {
 
 <style scoped>
 
+#controll-panel .collapsible-body .controll-panel-label .controll-panel-span{
+    display: block;
+}
+#controll-panel .collapsible-body .controll-panel-label .controll-panel-input{
+    display: inline-block;
+    width: calc(100% - 48px);
+}
+#controll-panel .collapsible-body .controll-panel-label .controll-panel-input-text{
+    display: inline-block;
+    width: 48px;
+    text-align: right;
+}
+
 #controll-panel{
     padding-top: calc(100vw * 3 / 4);
     max-height: calc(100vh - 44px);
@@ -244,6 +305,14 @@ export default {
 
 /*@media screen and (min-width:1024px) {*/
 @media screen and (min-width:568px) {
+
+#controll-panel .collapsible-body{
+    padding: 0.5rem;
+}
+#controll-panel .collapsible-body .controll-panel-label{
+    width: 100%;
+    display: block;
+}
 
 #controll-panel{
    position: fixed;
