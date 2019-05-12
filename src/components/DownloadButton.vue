@@ -79,7 +79,8 @@ export default {
    z-index: 300;
 }
 
-@media screen and (min-width:1024px) {
+/*@media screen and (min-width:1024px) {*/
+@media screen and (min-width:568px) {
 
 #button-download{
    position: fixed;

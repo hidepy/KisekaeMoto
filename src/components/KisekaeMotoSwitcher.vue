@@ -65,7 +65,8 @@ export default {
 
 }
 
-@media screen and (min-width:1024px) {
+/*@media screen and (min-width:1024px) {*/
+@media screen and (min-width:568px) {
 
 #moto-switcher-wrapper{
     top: 72px;

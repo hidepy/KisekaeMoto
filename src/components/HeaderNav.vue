@@ -19,7 +19,8 @@ export default {
 
 <style scoped>
 nav{
-    position: fixed;
+   position: fixed;
+   z-index: 999;
    height: 42px !important;
    line-height: 42px !important;
 }
@@ -27,7 +28,8 @@ nav .brand-logo{
    font-size: 20px !important;
 }
 
-@media screen and (min-width:1024px) {
+/*@media screen and (min-width:1024px) {*/
+@media screen and (min-width:568px) {
 
 nav{
    height: 56px !important;

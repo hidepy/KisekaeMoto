@@ -25,6 +25,8 @@
             v-bind:selector-parts-img="'.moto-parts'"
         />
 
+        <span style="position: absolute; top: 4px; left: 4px; background-color: rgba(255, 255, 255, 0.65); font-size: 11px; padding: 4px; border-radius: 4px;">{{selectedMotoName}}:{{(adjustRatio || 0).toFixed(3)}}</span>
+
     </div>
 
     <KisekaeMotoControllPanel
@@ -64,7 +66,7 @@ export default {
         filePath: "",
         motoDefinitions: motoDefinitions,
         controllPanelSettings: controllPanelSrc,
-        adjustRatio: 1
+        adjustRatio: ($("#moto-image-gn125-front").width() || document.body.clientWidth) / 1280
       }
     },
 
@@ -84,6 +86,12 @@ export default {
 
         // // Foldableコンポーネントのセットアップ
         // window.M.Collapsible.init(document.querySelectorAll(".collapsible"), {})
+        
+        
+        // TODO: どうにも初回に色がうまく変更されないことがあるんで一応...
+        setTimeout(()=> {
+            this.refreshAllParts()
+        }, 1000)
         
 
     },
@@ -164,6 +172,8 @@ console.log("[updateImgDef#setTImeout] count:" + count)
                 // TODO: 苦しいが...暫定...
                 setTimeout(()=> {
                     imgs.css({opacity: 1})
+
+                    
                 }, 1000)
 
             }, 1)
@@ -176,9 +186,13 @@ console.log("[updateImgDef#setTImeout] count:" + count)
 
 console.log("[refreshAllParts] driven!!");
 
-            const imgWidth = $("#moto-images").width()
+            // 画像側から幅を取得, なければ強制的に画面幅を入れ込む
+            //const imgWidth = $("#moto-images").width()
+            const imgWidth = $("#moto-image-gn125-front").width() || document.body.clientWidth
 
             this.adjustRatio = imgWidth / 1280;
+
+console.log(`adjuestRatio:${this.adjustRatio}`, imgWidth);
 
             // 部品の色を変更して描画
             (this.partsImgList || [])
@@ -269,23 +283,30 @@ const unitMap = {
 }
 
 .moto-images{
-   width: 100%;
+   /* width: 100%; */
+   width: 100vw;
+   height: calc(100vw * 3 / 4);
 }
 .moto-images #moto-image-gn125-front{
    width: 100%;
    z-index: 1;
+   /* iOS safariで、途中から部品画像がメイン画像の背面に表示されてしまう不具合があるので修正 */
+   position: absolute;
 }
 .moto-images .moto-parts{
    width: 100%;
    z-index: 5;
-   opacity: 0;
+   opacity: 0.1;
    transition: opacity 0.3s;
+
+   position: absolute;
 }
 .moto-images{
    position: relative;
 }
 
-@media screen and (min-width:1024px) {
+/*@media screen and (min-width:1024px) {*/
+@media screen and (min-width:568px) {
 
 #kisekae-moto-main-wrapper{
     padding-top: 56px;

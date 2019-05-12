@@ -10,10 +10,10 @@
                 <div class="collapsible-body" v-bind:id="'controll-panel-' + parts.fileName + '-wrapper'">
                     <label
                     class="controll-panel-label col s12 m3" 
-                    v-for="settings in controllPanelSettings"
-                    v-bind:key="parts.fileName + '' + settings.key"
+                        v-for="settings in controllPanelSettings"
+                        v-bind:key="parts.fileName + '' + settings.key"
                     >
-                        <span>{{settings.name}}</span>
+                        <span>{{settings.name}}:</span>
 
                         <input
                             type="range"
@@ -22,7 +22,8 @@
                             v-bind:max="settings.max"
                             v-bind:partsname="parts.fileName"
                             v-bind:settingname="settings.key"
-                            v-on:input="onSettingValueChange"
+                            
+                            v-on:change="onSettingValueChange"
                         />
 
                     </label>
@@ -116,6 +117,10 @@ export default {
 
                 // 入力コンポーネントにセット
                 this.setValues2InputField(savedCondition)
+
+                // コンポーネントにセット後再描画しないと、バイクの色が意図しない色で描画されてしまうためダメ押し
+                // あるべきとしては、親からsetting valueをもらって、それを画面描画するだけにしておくのが正しそうだが直すの面倒なんで...
+                this.refreshAllParts()
 
             }, 1)
 
@@ -237,7 +242,8 @@ export default {
    margin-bottom: 4px;
 }
 
-@media screen and (min-width:1024px) {
+/*@media screen and (min-width:1024px) {*/
+@media screen and (min-width:568px) {
 
 #controll-panel{
    position: fixed;
@@ -247,6 +253,7 @@ export default {
    z-index: 101;
    width: 192px;
    max-height: calc(100vh - 58px);
+   overflow-y: auto;
 }
 .collapsible{
    margin-bottom: 2px !important;
