@@ -48,6 +48,10 @@ export default {
     top: 36px;
     right: 4px;
     z-index: 200;
+
+    height: calc(90vw * 3 / 4);
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .moto-switcher-li{

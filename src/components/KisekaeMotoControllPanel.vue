@@ -1,7 +1,15 @@
 <template>
     <div id="controll-panel">
 
-        <ul class="collapsible">
+        <a
+            id="button-toggle-menu-state" 
+            class="waves-effect waves-light btn"
+            v-on:click="toggleMenuDisplayState"
+        >
+            メニューを{{!!menuDisplayState ? "非表示にする" : "表示する"}}
+        </a>
+
+        <ul class="collapsible" v-bind:class="{ hideMenu: !menuDisplayState }">
             <li
                 v-for="parts in partsImgList"
                 v-bind:key="parts.fileName"
@@ -44,9 +52,9 @@
             </li>
         </ul>
 
-        <div id="action-buttons">
+        <div id="action-buttons" v-bind:class="{ hideMenu: !menuDisplayState }">
 
-            <a id="button-reset-conditions" class="waves-effect waves-light btn blue-grey darken-2" v-on:click="onResetButtonClick">
+            <a id="button-reset-conditions" class="waves-effect waves-light btn blue-grey darken-2" v-on:click="onResetButtonClick" >
                 <i class="material-icons left">remove</i>初期値に戻す
             </a>
 
@@ -98,12 +106,28 @@ export default {
         this.setStorage2InputField()
     },
 
+    data: function () {
+      return {
+        menuDisplayState: true, // メニュー表示状態
+      }
+    },
+
     methods: {
+
+        /**
+         * メニュー表示状態を変更
+         */
+        toggleMenuDisplayState: function(){
+            this.menuDisplayState = !this.menuDisplayState
+        },
 
         /**
          * LocalStorageの値をinputフィールドに展開する
          */
         setStorage2InputField: function(){
+
+
+            console.log("setStorage2InputField comes")
 
             // バイクが未選択状態であれば終了
             if(!this.selectedMotoName) return
@@ -114,8 +138,13 @@ export default {
             // 初期値定義
             let defaultCondition = this.getInitialDef()
 
+            console.log("setStorage2InputField comes2")
+            console.log(defaultCondition)
+            console.log(this.selectedMotoName)
+
             // 展開可能であれば展開, NGならエラーを握りつぶす
             try{
+                console.log(window.localStorage)
                 savedCondition = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEYS[this.selectedMotoName]))
 
                 if(Object.keys(savedCondition) <= 0)
@@ -124,6 +153,8 @@ export default {
             catch(e){
                 savedCondition = defaultCondition
             }
+
+            console.log(savedCondition)
 
             // ホントはやりたくないが...どうにもうまく動かない時があるので
             setTimeout(()=> {
@@ -270,6 +301,13 @@ export default {
 </script>
 
 <style scoped>
+
+#button-toggle-menu-state{
+    width: 100%;
+}
+.hideMenu{
+    display: none;
+}
 
 #controll-panel .collapsible-body .controll-panel-label .controll-panel-span{
     display: block;

@@ -165,7 +165,12 @@ console.log("[updateImgDef#setTImeout] count:" + count)
                     console.log("something wrong... on loading imgs...");
                     console.log(error);
 
-                    alert("画像情報のロードに失敗しました...ページをリフレッシュして再度お試しください...")
+                    console.log($(error.target).attr("id"))
+
+                    
+
+                    // alert("画像情報のロードに失敗しました...ページをリフレッシュして再度お試しください...")
+                    M.toast({html: "画像のロードに失敗...ページをリフレッシュして下さい...(" + $(error.target).attr("id") + ")"})
                 })
 
                 
@@ -185,6 +190,10 @@ console.log("[updateImgDef#setTImeout] count:" + count)
         refreshAllParts: function(){
 
 console.log("[refreshAllParts] driven!!");
+
+            const maxImgHeight = window.innerHeight * 4 / 3 - 1 - 74
+            $("#moto-images").css("max-width", maxImgHeight)
+            // $("#moto-images").css("height", maxImgHeight)
 
             // 画像側から幅を取得, なければ強制的に画面幅を入れ込む
             //const imgWidth = $("#moto-images").width()
@@ -280,12 +289,14 @@ const unitMap = {
 
 #main-images-panel{
    position: fixed;
+   z-index: 10;
 }
 
 .moto-images{
    /* width: 100%; */
    width: 100vw;
-   height: calc(100vw * 3 / 4);
+   /* height: calc(100vw * 3 / 4); */
+   max-width: 880px;
 }
 .moto-images #moto-image-gn125-front{
    width: 100%;
@@ -316,6 +327,7 @@ const unitMap = {
    position: relative;
 }
 
+@media screen and (min-width:888px) {
 
 
 }
