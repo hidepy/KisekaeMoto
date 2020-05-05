@@ -1,6 +1,33 @@
 const defaultMainImgWidth = 1280
 
 export default {
+    REBEL250: {
+        mainImgPath: "img/rebel250/base/rebel250.jpg",
+        partsPath: "./img/rebel250/parts/",
+        partsDef: [
+            { name: "フェンダー", fileName: "fender_01", top: 0, left: 0, width: defaultMainImgWidth},
+            { name: "リアフェンダー", fileName: "fender_02", top: 0, left: 0, width: defaultMainImgWidth},
+            { name: "ヘッドライトカバー", fileName: "headlight", top: 0, left: 0, width: defaultMainImgWidth },
+            { name: "タンク", fileName: "tank", top: 0, left: 0, width: defaultMainImgWidth },
+            { name: "サイドカバー", fileName: "sidecover", top: 0, left: 0, width: defaultMainImgWidth },
+            { name: "シート", fileName: "sheet_01", top: 0, left: 0, width: defaultMainImgWidth },
+            { name: "シート(タンデム)", fileName: "sheet_02", top: 0, left: 0, width: defaultMainImgWidth },
+        ]
+    },
+    REBEL250_2: {
+        mainImgPath: "img/rebel250-2/base/rebel250-2.jpg",
+        partsPath: "./img/rebel250-2/parts/",
+        partsDef: [
+            { name: "フェンダー", fileName: "fender", top: 0, left: 0, width: defaultMainImgWidth},
+            { name: "ヘッドライトカバー", fileName: "headlight", top: 0, left: 0, width: defaultMainImgWidth },
+            { name: "タンク", fileName: "tank", top: 0, left: 0, width: defaultMainImgWidth },
+            { name: "サイドカバー", fileName: "sidecover_01", top: 0, left: 0, width: defaultMainImgWidth },
+            { name: "エンジンカバー", fileName: "sidecover_02", top: 0, left: 0, width: defaultMainImgWidth },
+            { name: "アンダーカウル", fileName: "cawl_01", top: 0, left: 0, width: defaultMainImgWidth },
+            { name: "テールカウル", fileName: "cawl_02", top: 0, left: 0, width: defaultMainImgWidth },
+            { name: "シート", fileName: "sheet", top: 0, left: 0, width: defaultMainImgWidth },
+        ]
+    },
     YZFR25:{
         mainImgPath: "img/yzfr25/base/motobase-yzfr25-front-1.jpg",
         partsPath: "./img/yzfr25/parts/motobase-yzfr25-front-1/",
@@ -71,31 +98,5 @@ export default {
             { name: "ホイール", fileName: "gladius400-wheel", top: 0, left: 0, width: defaultMainImgWidth },
         ]
     },
-    REBEL250: {
-        mainImgPath: "img/rebel250/base/rebel250.jpg",
-        partsPath: "./img/rebel250/parts/",
-        partsDef: [
-            { name: "フェンダー", fileName: "fender_01", top: 0, left: 0, width: defaultMainImgWidth},
-            { name: "リアフェンダー", fileName: "fender_02", top: 0, left: 0, width: defaultMainImgWidth},
-            { name: "ヘッドライトカバー", fileName: "headlight", top: 0, left: 0, width: defaultMainImgWidth },
-            { name: "タンク", fileName: "tank", top: 0, left: 0, width: defaultMainImgWidth },
-            { name: "サイドカバー", fileName: "sidecover", top: 0, left: 0, width: defaultMainImgWidth },
-            { name: "シート", fileName: "sheet_01", top: 0, left: 0, width: defaultMainImgWidth },
-            { name: "シート(タンデム)", fileName: "sheet_02", top: 0, left: 0, width: defaultMainImgWidth },
-        ]
-    },
-    REBEL250_2: {
-        mainImgPath: "img/rebel250-2/base/rebel250-2.jpg",
-        partsPath: "./img/rebel250-2/parts/",
-        partsDef: [
-            { name: "フェンダー", fileName: "fender", top: 0, left: 0, width: defaultMainImgWidth},
-            { name: "ヘッドライトカバー", fileName: "headlight", top: 0, left: 0, width: defaultMainImgWidth },
-            { name: "タンク", fileName: "tank", top: 0, left: 0, width: defaultMainImgWidth },
-            { name: "サイドカバー", fileName: "sidecover_01", top: 0, left: 0, width: defaultMainImgWidth },
-            { name: "エンジンカバー", fileName: "sidecover_02", top: 0, left: 0, width: defaultMainImgWidth },
-            { name: "アンダーカウル", fileName: "cawl_01", top: 0, left: 0, width: defaultMainImgWidth },
-            { name: "テールカウル", fileName: "cawl_02", top: 0, left: 0, width: defaultMainImgWidth },
-            { name: "シート", fileName: "sheet", top: 0, left: 0, width: defaultMainImgWidth },
-        ]
-    },
+
 }

@@ -102,8 +102,15 @@ export default {
 
     mounted: function(){
 
+        if(window.innerWidth < 1080){
+            // スマホの場合の高さ調整
+            const controllHeight = window.innerHeight - 42 - 280
+            $("#controll-panel").css("height", ( controllHeight > 250 ? controllHeight : 250 ) + "px")
+        }
+
         // 設定初期情報を画面にロード
         this.setStorage2InputField()
+
     },
 
     data: function () {
@@ -200,7 +207,11 @@ export default {
                     let val = 
                         v[vi.key] !== undefined 
                             ? v[vi.key] 
-                            :  (vi.key.indexOf("hue-rotate") >= 0 ? "0" : "100")
+                                : vi.key.indexOf("hue-rotate") >= 0 
+                                    ? "0" :
+                                        vi.key.indexOf("saturate") >= 0 
+                                            ? "200"
+                                                : "100"
 
                     defaultCondition[`controll-panel-${v.fileName}-${vi.key}`] = val
 
@@ -304,6 +315,8 @@ export default {
 
 #button-toggle-menu-state{
     width: 100%;
+
+    display: none;
 }
 .hideMenu{
     display: none;
@@ -323,8 +336,9 @@ export default {
 }
 
 #controll-panel{
-    padding-top: calc(100vw * 3 / 4);
+    /* padding-top: calc(100vw * 3 / 4); */
     max-height: calc(100vh - 44px);
+    width: 100%;
     overflow-y: scroll;
 }
 
@@ -341,8 +355,12 @@ export default {
    margin-bottom: 4px;
 }
 
-/*@media screen and (min-width:1024px) {*/
-@media screen and (min-width:568px) {
+@media screen and (min-width:1080px) {
+/* @media screen and (min-width:568px) { */
+
+#button-toggle-menu-state{
+    display: none;
+}
 
 #controll-panel .collapsible-body{
     padding: 0.5rem;
@@ -353,8 +371,9 @@ export default {
 }
 
 #controll-panel{
-   position: fixed;
-   padding-top: 0;
+    flex-grow: 1;
+   /* position: fixed; */
+   padding: 8px;
    bottom: 4px;
    left: 0;
    z-index: 101;

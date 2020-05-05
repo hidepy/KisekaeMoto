@@ -5,7 +5,7 @@
       download="moto-img.png"
       v-on:click="downloadImg"
   >
-          <i class="material-icons left">file_download</i>画像をDL(Chrome or Firefoxのみ)
+          <i class="material-icons left">file_download</i>画像DL(Chrome/Firefox)
   </a>
 </template>
 
@@ -74,20 +74,21 @@ export default {
 #button-download{
    position: absolute;
    bottom: 8px;
-   right: 8px;
+   /* right: 8px; */
+   left: 8px;
    opacity: 0.8;
    z-index: 300;
 }
 
-/*@media screen and (min-width:1024px) {*/
-@media screen and (min-width:568px) {
+@media screen and (min-width:1024px) {
+/* @media screen and (min-width:568px) { */
 
-#button-download{
+/* #button-download{
    position: fixed;
    bottom: 8px;
    right: 8px;
    opacity: 1;
-}
+} */
 
 }
 </style>
